@@ -11,6 +11,7 @@
           <%= f.text_field :name,class: "form-control", placeholder: "Name of gift",autofocus: true %>
         </div>
       </div>
+      
       <div class ="form-group">
         <div class="control-label col-md-2">
           <%= f.label :description %>
@@ -19,7 +20,18 @@
           <%= f.text_area :description, rows: 10,class: "form-control", placeholder: "Enter steps to create gift",autofocus: true %>
         </div>
       </div>
-
+      
+      <div class ="form-group">
+        <div class="row">
+          <div class="col-md-offset-2 col-md-8">
+            <%= f.collection_check_boxes :ingredient_ids, Ingredient.all, :id, :name do |cb| %>
+              <% cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
+            <% end %>
+          </div>
+          <%= f.label :description %>
+        </div>
+      </div>
+      
       <div class ="form-group">
         <dic class="col-md-offset-2 col-md-10">
           <%= f.submit class: "btn btn-primary btn-lg btn-xlarge"%>
