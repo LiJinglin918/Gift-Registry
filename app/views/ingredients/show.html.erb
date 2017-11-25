@@ -1,0 +1,14 @@
+<%= render 'shared/page_title',title: "#{@ingredient.name}" %>
+<% if @ingredient.recipes.count != 0 %>
+
+<h4 align="center">Gift Registry contains <%= @ingredient.name%></h4>
+<div class="center">
+  <%= will_paginate @ingredient_recipes %>
+</div>
+<%= render 'recipes/recipe', obj: @ingredient_recipes %>
+<div class="center">
+  <%= will_paginate @ingredient_recipes %>
+</div>
+<% else %>
+  <h4 align="center">No gift registry has it yet!</h4>
+<% end %>
