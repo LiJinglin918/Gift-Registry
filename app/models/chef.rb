@@ -1,6 +1,7 @@
 class Chef<ApplicationRecord
     attr_accessor :remember_token, :activation_token, :reset_token
-    before_save {self.email=email.downcase}
+    before_save   :downcase_email
+   # before_save {self.email=email.downcase}
     validates :chefname,presence:true,length:{maximum:30}
     VALID_EMAIL_REGEX =  /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
     validates :email,presence:true,length:{maximum:245},
@@ -11,19 +12,21 @@ class Chef<ApplicationRecord
     has_secure_password
     validates :password, presence:true, length: {minimum: 5}, allow_nil: true
 
-
-  # Activates an account.
-  def activate
-    update_attribute(:activated,    true)
-    update_attribute(:activated_at, Time.zone.now)
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while Chef.exists?(column => self[column])
   end
-
+  
+  def Chef.new_token
+    SecureRandom.urlsafe_base64
+  end
 
   # Sets the password reset attributes.
   def create_reset_digest
-    self.reset_token = Chef.new_token
-    update_attribute(:reset_digest,  Chef.digest(reset_token))
-    update_attribute(:reset_sent_at, Time.zone.now)
+  #  self.reset_token = Chef.new_token
+   # update_attribute(:reset_digest,  Chef.digest(reset_token))
+    #update_attribute(:reset_sent_at, Time.zone.now)
   end
 
   # Sends password reset email.

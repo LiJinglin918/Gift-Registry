@@ -10,7 +10,7 @@
           <li class="chef-title"><%= link_to chef.chefname.capitalize,chef_path(chef) %></li>
           <li><small><%= pluralize(chef.recipes.count, "gift") if chef.recipes %></small></li>
           <%if logged_in? && current_chef.admin? && !chef.admin?%>
-          <li class="btn btn-lg btn-primary"><%=link_to "destroy", chef_path(chef), method: :delete,
+          <li class="btn btn-lg btn-primary"><%=link_to "Delete", chef_path(chef), method: :delete,
                       data: {confirm: "Are you sure you want to delete the account and all associated gifts?"}%></li>
           <%end%>
         </div>
